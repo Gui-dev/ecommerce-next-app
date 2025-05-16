@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { describe, it, vi, beforeEach, expect } from 'vitest'
 import {
   QueryClient,
@@ -39,5 +39,18 @@ describe('<Dashboard />', () => {
     renderWithClient()
 
     expect(screen.getByText(/carregando/i)).toBeInTheDocument()
+  })
+
+  it('should be able to show message when there are no products', async () => {
+    mockedUseProducts.mockReturnValue({
+      isLoading: false,
+      data: undefined,
+    } as UseQueryResult<IProductProps[], Error>)
+
+    renderWithClient()
+
+    await waitFor(() => {
+      expect(screen.getByText(/não há produtos/i)).toBeInTheDocument()
+    })
   })
 })

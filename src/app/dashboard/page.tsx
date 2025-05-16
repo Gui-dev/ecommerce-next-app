@@ -10,8 +10,9 @@ const Dashboard = () => {
     return <p>Carregando...</p>
   }
 
-  if (!products) {
-    return <p>Não há produtos</p>
+  if (!products || products.length === 0) {
+    console.log(products)
+    return <p>Não há produtos</p>
   }
 
   return (
