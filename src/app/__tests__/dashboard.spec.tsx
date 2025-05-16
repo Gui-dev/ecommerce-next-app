@@ -1,0 +1,43 @@
+import { render, screen } from '@testing-library/react'
+import { describe, it, vi, beforeEach, expect } from 'vitest'
+import {
+  QueryClient,
+  QueryClientProvider,
+  type UseQueryResult,
+} from '@tanstack/react-query'
+
+import { type IProductProps, useProducts } from '@/hooks/use-products'
+import Dashboard from '@/app/dashboard/page'
+
+// Mock do hook useProducts
+vi.mock('@/hooks/use-products', () => ({
+  useProducts: vi.fn(),
+}))
+
+describe('<Dashboard />', () => {
+  const mockedUseProducts = vi.mocked(useProducts)
+
+  const renderWithClient = () => {
+    const client = new QueryClient()
+    return render(
+      <QueryClientProvider client={client}>
+        <Dashboard />
+      </QueryClientProvider>
+    )
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('should be able renders loading', () => {
+    mockedUseProducts.mockReturnValue({
+      isLoading: true,
+      data: undefined,
+    } as UseQueryResult<IProductProps[], Error>)
+
+    renderWithClient()
+
+    expect(screen.getByText(/carregando/i)).toBeInTheDocument()
+  })
+})
