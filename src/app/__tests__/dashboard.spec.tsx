@@ -53,4 +53,16 @@ describe('<Dashboard />', () => {
       expect(screen.getByText(/não há produtos/i)).toBeInTheDocument()
     })
   })
+
+  it('should be able to show a list of products', async () => {
+    mockedUseProducts.mockReturnValue({
+      isLoading: false,
+      data: [
+        { id: 1, title: 'Product 1', price: 10 },
+        { id: 2, title: 'Product 2', price: 20 },
+      ],
+    } as UseQueryResult<IProductProps[], Error>)
+
+    renderWithClient()
+  })
 })
