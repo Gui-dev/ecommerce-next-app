@@ -1,13 +1,18 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import Home from '@/app/page'
 import { AuthContext } from '@/context/auth-provider'
-import { beforeEach } from 'node:test'
+
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/use-auth'
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
+}))
+
+vi.mock('@/hooks/use-auth', () => ({
+  useAuth: vi.fn(),
 }))
 
 describe('<LoginPage />', () => {
@@ -16,7 +21,12 @@ describe('<LoginPage />', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useRouter).mockReturnValue({ push: pushMock } as any)
+    vi.mocked(useAuth).mockReturnValue({
+      user: null,
+      login: loginMock,
+      logout: vi.fn(),
+    })
+    vi.mocked(useRouter).mockReturnValue({ push: pushMock } as unknown as ReturnType<typeof useRouter>)
   })
 
   const renderLoginPage = () => {
@@ -49,6 +59,25 @@ describe('<LoginPage />', () => {
     await waitFor(() => {
       expect(screen.getByText(/e-mail inválido/i)).toBeInTheDocument()
       expect(screen.getByText(/mínimo de 6 caracteres/i)).toBeInTheDocument()
+    })
+  })
+
+  it('should be able calls login and redirects on success', async () => {
+    renderLoginPage()
+
+    fireEvent.change(screen.getByPlaceholderText(/e-mail/i), {
+      target: { value: 'test@example.com' },
+    })
+
+    fireEvent.change(screen.getByPlaceholderText(/senha/i), {
+      target: { value: '123456' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /entrar/i }))
+
+    await waitFor(() => {
+      expect(loginMock).toHaveBeenCalledWith('test@example.com', '123456')
+      expect(pushMock).toHaveBeenCalledWith('/dashboard')
     })
   })
 })

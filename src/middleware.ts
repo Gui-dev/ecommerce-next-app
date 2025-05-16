@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_ROUTES = ['/', '/dashboard', '/cart']
+const PUBLIC_ROUTES = ['/']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value
@@ -18,5 +18,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/dashboard/:path*'],
+  matcher: ['/', '/dashboard/:path*', '/cart'],
 }
