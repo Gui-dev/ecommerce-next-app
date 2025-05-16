@@ -9,6 +9,8 @@ export interface ICartItem extends IProductProps {
 export interface ICartState {
   items: ICartItem[]
   addToCart: (product: IProductProps) => void
+  increaseQuantity: (id: number) => void
+  decreaseQuantity: (id: number) => void
   removeFromCart: (id: number) => void
   clearCart: () => void
   totalQuantity: () => number
@@ -38,6 +40,24 @@ export const useCartStore = create<ICartState>()(
         }
       },
 
+      increaseQuantity: id => {
+        set({
+          items: get().items.map(item =>
+            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+          ),
+        })
+      },
+
+      decreaseQuantity: id => {
+        set({
+          items: get()
+            .items.map(item =>
+              item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+            )
+            .filter(item => item.quantity > 0),
+        })
+      },
+
       removeFromCart: id => {
         set({
           items: get().items.filter(item => item.id !== id),
@@ -45,8 +65,10 @@ export const useCartStore = create<ICartState>()(
       },
 
       clearCart: () => set({ items: [] }),
+
       totalQuantity: () =>
         get().items.reduce((acc, item) => acc + item.quantity, 0),
+
       totalPrice: () =>
         get().items.reduce((acc, item) => acc + item.price * item.quantity, 0),
     }),
