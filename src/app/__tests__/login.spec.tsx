@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import Home from '@/app/page'
 import { AuthContext } from '@/context/auth-provider'
@@ -39,5 +39,16 @@ describe('<LoginPage />', () => {
     expect(screen.getByPlaceholderText(/e-mail/i)).toBeInTheDocument()
     expect(screen.getByPlaceholderText(/senha/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /entrar/i })).toBeInTheDocument()
+  })
+
+  it('should validates required fields', async () => {
+    renderLoginPage()
+
+    fireEvent.click(screen.getByRole('button', { name: /entrar/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText(/e-mail inválido/i)).toBeInTheDocument()
+      expect(screen.getByText(/mínimo de 6 caracteres/i)).toBeInTheDocument()
+    })
   })
 })
