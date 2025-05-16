@@ -64,5 +64,10 @@ describe('<Dashboard />', () => {
     } as UseQueryResult<IProductProps[], Error>)
 
     renderWithClient()
+
+    await waitFor(() => {
+      expect(screen.getByText(/product 1/i)).toBeInTheDocument()
+      expect(screen.getByText(/product 2/i)).toBeInTheDocument()
+    })
   })
 })
