@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
-const PUBLIC_ROUTES = ['/', '/dashboard']
+const PUBLIC_ROUTES = ['/', '/dashboard', '/cart']
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value
