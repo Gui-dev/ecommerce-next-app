@@ -1,5 +1,5 @@
 import { useCartStore } from '@/lib/zustand/cart-store'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Product } from '../product'
 
@@ -16,6 +16,20 @@ vi.mock('@/lib/zustand/cart-store', () => ({
   useCartStore: vi.fn(),
 }))
 
+const createCartStoreMock = (overrides = {}) => {
+  return {
+    addToCart: vi.fn(),
+    items: [],
+    increaseQuantity: vi.fn(),
+    decreaseQuantity: vi.fn(),
+    removeFromCart: vi.fn(),
+    clearCart: vi.fn(),
+    totalQuantity: vi.fn(),
+    totalPrice: vi.fn(),
+    ...overrides,
+  }
+}
+
 describe('<Product />', () => {
   const addToCartMock = vi.fn()
 
@@ -30,9 +44,8 @@ describe('<Product />', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
-    vi.mocked(useCartStore).mockImplementation(cb =>
-      cb({ addToCart: addToCartMock })
-    )
+    const cartMock = createCartStoreMock({ addToCart: addToCartMock })
+    vi.mocked(useCartStore).mockImplementation(cb => cb(cartMock))
   })
 
   it('should be able to render a product component correctly', async () => {
@@ -47,5 +60,18 @@ describe('<Product />', () => {
       name: /adicionar no carrinho/i,
     })
     expect(addToCartButton).toBeInTheDocument()
+  })
+
+  it('should be able to call addToCart on button click', async () => {
+    render(<Product product={fakeProduct} />)
+
+    const addToCartButton = screen.getByRole('button', {
+      name: /adicionar no carrinho/i,
+    })
+
+    fireEvent.click(addToCartButton)
+
+    expect(addToCartMock).toHaveBeenCalledTimes(1)
+    expect(addToCartMock).toHaveBeenCalledWith(fakeProduct)
   })
 })
