@@ -8,11 +8,32 @@ import {
 } from '@/lib/zustand/cart-store'
 import Cart from '../cart/page'
 
+vi.mock('next/image', () => ({
+  __esModule: true,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  default: (props: any) => {
+    // biome-ignore lint: <explanation>
+    return <img alt="" {...props} />
+  },
+}))
+
 vi.mock('@/lib/zustand/cart-store', () => ({
   useCartStore: vi.fn(),
 }))
 
 describe('<Cart />', () => {
+  const mockItems: ICartItem[] = [
+    {
+      id: 1,
+      title: 'Product 1',
+      description: 'Description 1',
+      category: 'Category 1',
+      price: 100,
+      quantity: 2,
+      image: '/fake-image.jpg',
+    },
+  ]
+
   const mockCartState = (items: ICartItem[] = []): ICartState => ({
     items,
     addToCart: vi.fn(),
@@ -35,5 +56,16 @@ describe('<Cart />', () => {
 
     expect(screen.getByText(/seu carrinho está vazio/i)).toBeInTheDocument()
     expect(screen.getByText(/ir para a loja/i)).toBeInTheDocument()
+  })
+
+  it('should be able to render cart items and total price', async () => {
+    vi.mocked(useCartStore).mockReturnValue(mockCartState(mockItems))
+
+    render(<Cart />)
+
+    expect(screen.getByText(/product 1/i)).toBeInTheDocument()
+    expect(screen.getByText(/category 1/i)).toBeInTheDocument()
+    expect(screen.getByText(/R\$ 100.00/i)).toBeInTheDocument()
+    expect(screen.getByText(/total: r\$ 200.00/i)).toBeInTheDocument()
   })
 })
