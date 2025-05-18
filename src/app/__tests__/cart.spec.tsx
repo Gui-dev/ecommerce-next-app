@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
@@ -67,5 +67,26 @@ describe('<Cart />', () => {
     expect(screen.getByText(/category 1/i)).toBeInTheDocument()
     expect(screen.getByText(/R\$ 100.00/i)).toBeInTheDocument()
     expect(screen.getByText(/total: r\$ 200.00/i)).toBeInTheDocument()
+  })
+
+  it('should be able to trigger store actions on button clicks', async () => {
+    const state = mockCartState(mockItems)
+    vi.mocked(useCartStore).mockReturnValue(state)
+
+    render(<Cart />)
+
+    const increaseQuantityButton = screen.getByRole('button', { name: '+' })
+    fireEvent.click(increaseQuantityButton)
+    expect(state.increaseQuantity).toHaveBeenCalledWith(1)
+
+    const decreaseQuantityButton = screen.getByRole('button', { name: '-' })
+    fireEvent.click(decreaseQuantityButton)
+    expect(state.decreaseQuantity).toHaveBeenCalledWith(1)
+
+    const removeFromCartButton = screen.getByRole('button', {
+      name: /remover/i,
+    })
+    fireEvent.click(removeFromCartButton)
+    expect(state.removeFromCart).toHaveBeenCalledWith(1)
   })
 })
