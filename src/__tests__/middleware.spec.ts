@@ -30,4 +30,14 @@ describe('Middleware', () => {
     expect(response.status).toBe(307)
     expect(response.headers.get('location')).toBe('http://localhost:3000/')
   })
+
+  it('should be able to redirects to /dashboard if authenticated and accessing public route', async () => {
+    const request = createMockRequest('/', 'mock-token')
+    const response = middleware(request)
+
+    expect(response.status).toBe(307)
+    expect(response.headers.get('location')).toBe(
+      'http://localhost:3000/dashboard'
+    )
+  })
 })
