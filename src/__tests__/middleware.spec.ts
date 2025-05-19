@@ -47,4 +47,11 @@ describe('Middleware', () => {
 
     expect(response).toEqual(NextResponse.next())
   })
+
+  it('should be able to allows access to public route if not authenticated', async () => {
+    const request = createMockRequest('/')
+    const response = middleware(request)
+
+    expect(response).toEqual(NextResponse.next())
+  })
 })
