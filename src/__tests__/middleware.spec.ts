@@ -1,5 +1,5 @@
 import { middleware } from '@/middleware'
-import type { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { describe, expect, it } from 'vitest'
 
 const createMockRequest = (pathname: string, token?: string): NextRequest => {
@@ -39,5 +39,12 @@ describe('Middleware', () => {
     expect(response.headers.get('location')).toBe(
       'http://localhost:3000/dashboard'
     )
+  })
+
+  it('should be able to allow access to protected route if authenticated', async () => {
+    const request = createMockRequest('/dashboard', 'mock-token')
+    const response = middleware(request)
+
+    expect(response).toEqual(NextResponse.next())
   })
 })
