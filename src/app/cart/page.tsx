@@ -58,7 +58,7 @@ const Cart = () => {
                   -
                 </button>
 
-                <span>{item.quantity}</span>
+                <span data-testid="quantity">{item.quantity}</span>
 
                 <button
                   type="button"
