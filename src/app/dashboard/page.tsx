@@ -5,14 +5,22 @@ import { Product } from '@/components/product'
 
 const Dashboard = () => {
   const { data: products, isLoading } = useProducts()
-
   if (isLoading) {
-    return <p>Carregando...</p>
+    return (
+      <main className="p-4">
+        <h1 className="sr-only">Carregando produtos</h1>
+        <p>Carregando...</p>
+      </main>
+    )
   }
 
   if (!products || products.length === 0) {
-    console.log(products)
-    return <p>Não há produtos</p>
+    return (
+      <main className="p-4">
+        <h1 className="sr-only">Nenhum produto encontrado</h1>
+        <p>Não há produtos</p>
+      </main>
+    )
   }
 
   return (
