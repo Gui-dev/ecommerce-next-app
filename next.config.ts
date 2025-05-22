@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { createSecureHeaders } from 'next-secure-headers'
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -11,6 +12,15 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+  },
+
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: createSecureHeaders(),
+      },
+    ]
   },
 }
 
