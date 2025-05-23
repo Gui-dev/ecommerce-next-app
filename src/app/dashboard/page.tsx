@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import { useProducts } from '@/hooks/use-products'
 import { Product } from '@/components/product'
+import { CartButton } from '@/components/cart-button'
 
 const Dashboard = () => {
   const { data: products, isLoading } = useProducts()
@@ -26,7 +27,7 @@ const Dashboard = () => {
   }
 
   return (
-    <main className="p-4">
+    <main className="py-4 px-8">
       <Head>
         <title>Dashboard - Produtos</title>
         <meta
@@ -35,7 +36,11 @@ const Dashboard = () => {
         />
       </Head>
 
-      <h1 className="text-2xl font-bold mb-4">Produtos</h1>
+      <header className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">Produtos</h1>
+
+        <CartButton />
+      </header>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {products.map((product, index) => {
