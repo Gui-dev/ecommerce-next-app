@@ -12,6 +12,8 @@ vi.mock('next/image', () => ({
   },
 }))
 
+vi.mock('sonner', () => ({ toast: { success: vi.fn() } }))
+
 vi.mock('@/lib/zustand/cart-store', () => ({
   useCartStore: vi.fn(),
 }))
@@ -63,6 +65,19 @@ describe('<Product />', () => {
   })
 
   it('should be able to call addToCart on button click', async () => {
+    render(<Product product={fakeProduct} />)
+
+    const addToCartButton = screen.getByRole('button', {
+      name: /adicionar no carrinho/i,
+    })
+
+    fireEvent.click(addToCartButton)
+
+    expect(addToCartMock).toHaveBeenCalledTimes(1)
+    expect(addToCartMock).toHaveBeenCalledWith(fakeProduct)
+  })
+
+  it('should be able to call toast on buttton click', async () => {
     render(<Product product={fakeProduct} />)
 
     const addToCartButton = screen.getByRole('button', {

@@ -6,7 +6,7 @@ import { useCartStore } from '@/lib/zustand/cart-store'
 
 interface IProduct {
   product: IProductProps
-  priority: boolean
+  priority?: boolean
 }
 
 export const Product = ({ product, priority }: IProduct) => {
