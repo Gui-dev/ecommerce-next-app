@@ -4,9 +4,10 @@ import Image from 'next/image'
 
 interface IProduct {
   product: IProductProps
+  priority: boolean
 }
 
-export const Product = ({ product }: IProduct) => {
+export const Product = ({ product, priority }: IProduct) => {
   const addTocart = useCartStore(state => state.addToCart)
 
   return (
@@ -16,6 +17,7 @@ export const Product = ({ product }: IProduct) => {
         alt={product.title}
         width={200}
         height={200}
+        priority={priority}
         className="h-40 mx-auto object-contain mb-2"
       />
       <h2 className="text-lg font-semibold">{product.title}</h2>

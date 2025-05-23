@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import Head from 'next/head'
 
 import { useAuth } from '@/hooks/use-auth'
 import { loginSchema, type LoginSchemaData } from '@/validations/login-schema'
@@ -25,6 +26,10 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center bg-gray-950 p-4">
+      <Head>
+        <title>Home - Faça seu login</title>
+        <meta name="description" content="Faça seu login e boas compras" />
+      </Head>
       <form
         onSubmit={handleSubmit(handleLogin)}
         className="w-full max-w-sm bg-zinc-900 p-6 rounded-xl shadow-gray-600 shadow-sm"
@@ -35,7 +40,7 @@ export default function Home() {
           <input
             type="email"
             placeholder="E-mail"
-            className="text-gray-100 w-full border border-gray-800 px-3 py-2 rounded-md placeholder:text-gray-700"
+            className="text-gray-100 w-full border border-gray-800 px-3 py-2 rounded-md placeholder:text-gray-300"
             {...register('email')}
           />
           {errors.email && (
@@ -47,7 +52,7 @@ export default function Home() {
           <input
             type="password"
             placeholder="Senha"
-            className="text-gray-100 w-full border border-gray-800 px-3 py-2 rounded-md placeholder:text-gray-700"
+            className="text-gray-100 w-full border border-gray-800 px-3 py-2 rounded-md placeholder:text-gray-300"
             {...register('password')}
           />
           {errors.password && (

@@ -1,5 +1,7 @@
 'use client'
 
+import Head from 'next/head'
+
 import { useProducts } from '@/hooks/use-products'
 import { Product } from '@/components/product'
 
@@ -25,11 +27,21 @@ const Dashboard = () => {
 
   return (
     <main className="p-4">
+      <Head>
+        <title>Dashboard - Produtos</title>
+        <meta
+          name="description"
+          content="Veja todos os nossos produtos disponíveis"
+        />
+      </Head>
+
       <h1 className="text-2xl font-bold mb-4">Produtos</h1>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {products.map(product => {
-          return <Product key={product.id} product={product} />
+        {products.map((product, index) => {
+          return (
+            <Product key={product.id} product={product} priority={index < 3} />
+          )
         })}
       </div>
     </main>

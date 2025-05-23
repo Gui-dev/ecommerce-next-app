@@ -1,8 +1,10 @@
 'use client'
 
-import { useCartStore } from '@/lib/zustand/cart-store'
+import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { useCartStore } from '@/lib/zustand/cart-store'
 
 const Cart = () => {
   const {
@@ -26,6 +28,13 @@ const Cart = () => {
 
   return (
     <main className="p-6">
+      <Head>
+        <title>Cart - Seu carrinho de comprars</title>
+        <meta
+          name="description"
+          content="Veja todos os produtos que você tem no seu carrinho"
+        />
+      </Head>
       <h1 className="text-2xl font-bold mb-6">Carrinho de Compras</h1>
 
       <div className="flex flex-col gap-4">
