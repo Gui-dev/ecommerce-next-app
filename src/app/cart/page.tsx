@@ -3,6 +3,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 import { useCartStore } from '@/lib/zustand/cart-store'
 
@@ -14,6 +15,11 @@ const Cart = () => {
     removeFromCart,
     totalPrice,
   } = useCartStore()
+
+  const handleRemoveItem = (id: number) => {
+    removeFromCart(id)
+    toast.success('Produto removido do carrinho')
+  }
 
   if (items.length === 0) {
     return (
@@ -81,7 +87,7 @@ const Cart = () => {
               <button
                 type="button"
                 className="text-red-500 cursor-pointer hover:text-red-600 transation-colors"
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => handleRemoveItem(item.id)}
               >
                 Remover
               </button>

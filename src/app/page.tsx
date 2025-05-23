@@ -1,12 +1,12 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import Head from 'next/head'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 
 import { useAuth } from '@/hooks/use-auth'
-import { loginSchema, type LoginSchemaData } from '@/validations/login-schema'
+import { type LoginSchemaData, loginSchema } from '@/validations/login-schema'
 
 export default function Home() {
   const {

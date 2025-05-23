@@ -1,6 +1,8 @@
+import { toast } from 'sonner'
+import Image from 'next/image'
+
 import type { IProductProps } from '@/hooks/use-products'
 import { useCartStore } from '@/lib/zustand/cart-store'
-import Image from 'next/image'
 
 interface IProduct {
   product: IProductProps
@@ -9,6 +11,11 @@ interface IProduct {
 
 export const Product = ({ product, priority }: IProduct) => {
   const addTocart = useCartStore(state => state.addToCart)
+
+  const handleAddToCart = () => {
+    addTocart(product)
+    toast.success(`${product.title} adicionado ao carrinho`)
+  }
 
   return (
     <div key={product.id} className="border rounded-xl p-4 shadow-sm">
@@ -26,7 +33,7 @@ export const Product = ({ product, priority }: IProduct) => {
       <button
         type="button"
         className="mt-2 px-4 py-1 bg-blue-600 text-white rounded cursor-pointer hover:bg-blue-700"
-        onClick={() => addTocart(product)}
+        onClick={handleAddToCart}
       >
         Adicionar no carrinho
       </button>
