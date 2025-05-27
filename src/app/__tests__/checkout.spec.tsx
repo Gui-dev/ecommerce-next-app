@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { useRouter } from 'next/navigation'
 
 import {
@@ -67,5 +67,27 @@ describe('<Checkout />', () => {
     expect(screen.getByText(/product 1/i)).toBeInTheDocument()
     expect(screen.getByText(/product 2/i)).toBeInTheDocument()
     expect(screen.getByText(/total: r\$ 300.00/i)).toBeInTheDocument()
+  })
+
+  it('should be able to validate and submit the form correctly', async () => {
+    const state = mockCartState(mockItems)
+    vi.mocked(useCartStore).mockReturnValue(state)
+
+    render(<Checkout />)
+
+    fireEvent.change(screen.getByPlaceholderText(/nome igual do cartão/i), {
+      target: { value: 'Bruce Wayne' },
+    })
+
+    fireEvent.change(screen.getByPlaceholderText(/número do cartão/i), {
+      target: { value: '1234123412341234' },
+    })
+
+    fireEvent.click(screen.getByRole('button', { name: /finalizar compra/i }))
+
+    await waitFor(() => {
+      expect(state.clearCart).toHaveBeenCalled()
+      expect(mockPush).toHaveBeenCalledWith('/success')
+    })
   })
 })
