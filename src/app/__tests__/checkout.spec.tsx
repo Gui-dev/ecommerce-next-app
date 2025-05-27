@@ -90,4 +90,17 @@ describe('<Checkout />', () => {
       expect(mockPush).toHaveBeenCalledWith('/success')
     })
   })
+
+  it('should be able to show errors when form is invalid', async () => {
+    vi.mocked(useCartStore).mockReturnValue(mockCartState(mockItems))
+
+    render(<Checkout />)
+
+    fireEvent.click(screen.getByRole('button', { name: /finalizar compra/i }))
+
+    expect(await screen.findByText(/nome obrigatório/i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/número deve ter no mínimo 16 dígitos/i)
+    ).toBeInTheDocument()
+  })
 })
