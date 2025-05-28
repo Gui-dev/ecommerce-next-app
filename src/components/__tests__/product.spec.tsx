@@ -2,6 +2,7 @@ import { useCartStore } from '@/lib/zustand/cart-store'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Product } from '../product'
+import { toast } from 'sonner'
 
 vi.mock('next/image', () => ({
   __esModule: true,
@@ -86,6 +87,9 @@ describe('<Product />', () => {
 
     fireEvent.click(addToCartButton)
 
+    expect(toast.success).toHaveBeenCalledWith(
+      `${fakeProduct.title} adicionado ao carrinho`
+    )
     expect(addToCartMock).toHaveBeenCalledTimes(1)
     expect(addToCartMock).toHaveBeenCalledWith(fakeProduct)
   })
