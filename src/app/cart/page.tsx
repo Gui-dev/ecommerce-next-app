@@ -96,10 +96,19 @@ const Cart = () => {
         })}
       </div>
 
-      <div className="mt-6 text-right">
+      <div className="flex flex-col gap-4 items-end justify-end mt-6 text-right">
         <h2 className="text-xl font-bold">
           Total: R$ {totalPrice().toFixed(2)}
         </h2>
+        <Link href="/checkout" title="Finalizar compra">
+          <button
+            type="button"
+            aria-label="Finalizar compra"
+            className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md transition-colors cursor-pointer"
+          >
+            Finalizar compra
+          </button>
+        </Link>
       </div>
     </main>
   )
