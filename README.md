@@ -96,7 +96,7 @@ src/
 
 * Toggle no header
 * Implementado com `next-themes`
-* Tailwind configurado com `darkMode: 'class'`
+* Tailwind configurado com `darkMode 'class'`
 * Persistência em `localStorage`
 
 ---
