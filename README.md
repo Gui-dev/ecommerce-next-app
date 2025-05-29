@@ -127,7 +127,7 @@ Utiliza `auth-token` via cookies para proteger as rotas privadas (`/dashboard`, 
 
 ## 📌 Futuras melhorias
 
-* Integração com API real (como Stripe ou fakestoreapi)
+* Integração com API real (como Stripe)
 * Dashboard do admin
 * Histórico de pedidos
 * CI com GitHub Actions
