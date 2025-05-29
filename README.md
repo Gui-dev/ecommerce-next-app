@@ -33,7 +33,6 @@ Inclui recursos como:
 | **Validação**          | [React Hook Form](https://react-hook-form.com/), [Zod](https://zod.dev/) |
 | **Gerenciamento de estado** | [Zustand](https://zustand-demo.pmnd.rs/) |
 | **Testes**             | [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/) |
-| **Mock API** (opcional) | [MSW](https://mswjs.io/) (ainda não utilizado) |
 | **Feedback/Toast**     | [Sonner](https://ui.shadcn.dev/docs/components/sonner) |
 | **Segurança**          | [next-secure-headers](https://www.npmjs.com/package/next-secure-headers) |
 | **Ícones**             | [Lucide Icons](https://lucide.dev/) |
