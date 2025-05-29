@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-gray-950 p-4">
+    <main className="min-h-screen flex flex-col items-center justify-center p-4">
       <Head>
         <title>Home - Faça seu login</title>
         <meta name="description" content="Faça seu login e boas compras" />
