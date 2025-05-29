@@ -35,6 +35,8 @@ Inclui recursos como:
 | **Testes**             | [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/) |
 | **Feedback/Toast**     | [Sonner](https://ui.shadcn.dev/docs/components/sonner) |
 | **Segurança**          | [next-secure-headers](https://www.npmjs.com/package/next-secure-headers) |
+| **Temas**              | [next-themes](https://github.com/pacocoursey/next-themes) |
+| **Fake API**           | [Fake Store API](https://fakestoreapi.com/) |
 | **Ícones**             | [Lucide Icons](https://lucide.dev/) |
 
 ---
